@@ -1,0 +1,249 @@
+table PurchaseOrders
+	lineageTag: d46eee92-1f99-6126-1002-61b4945a7dc3
+
+	measure 'Total Purchase Orders' = COUNTROWS(PurchaseOrders)
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: 82a4ce85-786f-02e8-4089-0490ec862e2a
+
+	measure 'Total Ordered Units' = SUM(PurchaseOrders[OrderQty])
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: eb0fe5b5-ec0d-e150-1c57-461878214d9d
+
+	measure 'Total Received Units' = SUM(PurchaseOrders[ReceivedQty])
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: 9e826a48-6738-f4c1-5142-3e8c3a324da1
+
+	measure 'Outstanding Units' = SUM(PurchaseOrders[PendingQty]) + 0
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: 18377e4b-be79-3400-515c-7ee7b772de9d
+
+	measure 'Outstanding Units (Open POs)' = CALCULATE(SUM(PurchaseOrders[PendingQty]), KEEPFILTERS(PurchaseOrders[PendingQty] > 0))
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: 6b900404-cfd1-2a7e-8f4a-013352f253cb
+
+	measure 'Fulfillment Rate %' = DIVIDE([Total Received Units], [Total Ordered Units])
+		formatString: 0.0%
+		displayFolder: Purchase Orders
+		lineageTag: d22268ae-5c8b-efde-32fe-6fc8edd82f75
+
+	measure 'Open POs' = CALCULATE(COUNTROWS(PurchaseOrders), KEEPFILTERS(PurchaseOrders[StatusClean] <> "Received"))
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: 7864bda2-9765-630c-45e0-498994e89526
+
+	measure 'Overdue POs' = CALCULATE(COUNTROWS(PurchaseOrders), KEEPFILTERS(PurchaseOrders[DeliveryStatus] = "Open - Overdue"))
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: 889fb668-c776-d502-465e-178346c058a5
+
+	measure 'Open POs Not Yet Due' = CALCULATE(COUNTROWS(PurchaseOrders), KEEPFILTERS(PurchaseOrders[DeliveryStatus] = "Open - Not Yet Due"))
+		formatString: #,0
+		displayFolder: Purchase Orders
+		lineageTag: 10430baa-8f77-02af-e7f8-9eedad775aef
+
+	measure 'PO Status Color' = SWITCH(SELECTEDVALUE(PurchaseOrders[DeliveryStatus]), "Late", "#C84D4D", "Open - Overdue", "#C84D4D", "Open - Not Yet Due", "#E5A33D", "Early", "#25856A", "On Time", "#25856A", "#16324F")
+		displayFolder: Formatting
+		lineageTag: 3ee3610a-2b4c-0c2a-2cda-db3e32f5dd12
+
+	column POID
+		dataType: string
+		lineageTag: c47fd779-7bf6-8bdd-9a35-8f5ebd50b14b
+		summarizeBy: none
+		sourceColumn: POID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: string
+		lineageTag: b5524535-2f18-4c99-711a-4ed1137256a2
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierID
+		dataType: string
+		lineageTag: 321cab27-4f61-a4b4-0c01-c8572f03d53a
+		summarizeBy: none
+		sourceColumn: SupplierID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 7724d962-f5bd-47f6-90fd-0784748b9a5c
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ExpectedDeliveryDate
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: a53d0d79-1c48-6b65-259c-e6441f6cb6aa
+		summarizeBy: none
+		sourceColumn: ExpectedDeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ActualDeliveryDate
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 04220dbe-d4cf-4dd6-1bb7-cba34bfabccb
+		summarizeBy: none
+		sourceColumn: ActualDeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column OrderQty
+		dataType: int64
+		formatString: #,0
+		lineageTag: 74f58919-e2b1-1878-0df8-9bef5619c6f4
+		summarizeBy: sum
+		sourceColumn: OrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReceivedQty
+		dataType: int64
+		formatString: #,0
+		lineageTag: 36ffab3c-b86c-898b-840a-ddf6d8fb30b9
+		summarizeBy: sum
+		sourceColumn: ReceivedQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderValue
+		dataType: double
+		formatString: #,0
+		lineageTag: 9d42dfc8-daba-bc54-7724-327eb81b0db4
+		summarizeBy: sum
+		sourceColumn: OrderValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 042f9fb1-27c0-e675-a75f-c776d0119cc9
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column PendingQty
+		dataType: int64
+		formatString: #,0
+		lineageTag: 59a2747f-a635-f1fe-0b8f-f568cc8ddeb1
+		summarizeBy: sum
+		sourceColumn: PendingQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column FillRatePct
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 1db83072-84ce-f3cd-6ec3-09449d5c9cb4
+		summarizeBy: none
+		sourceColumn: FillRatePct
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReceivedValue
+		dataType: double
+		formatString: #,0
+		lineageTag: 67741795-ae76-b2d0-a586-3b7dba2d2afe
+		summarizeBy: sum
+		sourceColumn: ReceivedValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column PlannedLeadTimeDays
+		dataType: int64
+		lineageTag: 996b4058-8138-2b02-942c-a121977aca6f
+		summarizeBy: none
+		sourceColumn: PlannedLeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualLeadTimeDays
+		dataType: int64
+		lineageTag: a0e7f531-8ced-e228-0d5d-faf3b266d57c
+		summarizeBy: none
+		sourceColumn: ActualLeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryDelayDays
+		dataType: int64
+		lineageTag: 3d3e84b8-0b24-c7e6-6cf5-0e7e6bf3db9c
+		summarizeBy: none
+		sourceColumn: DeliveryDelayDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusClean
+		dataType: string
+		lineageTag: 421d17c7-f91f-e77e-a6a7-8b8a8cb495f8
+		summarizeBy: none
+		sourceColumn: StatusClean
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryStatus
+		dataType: string
+		lineageTag: f83bbf06-5613-07a1-39dd-d618487571ca
+		summarizeBy: none
+		sourceColumn: DeliveryStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataIssue
+		dataType: string
+		lineageTag: 410a797b-6957-31a3-17c7-9357d21f7ea0
+		summarizeBy: none
+		sourceColumn: DataIssue
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasDataIssue
+		dataType: string
+		lineageTag: 235e0291-dc83-b2bf-654e-789d1bd8f37e
+		summarizeBy: none
+		sourceColumn: HasDataIssue
+
+		annotation SummarizationSetBy = Automatic
+
+	column POStatus
+		dataType: string
+		lineageTag: ca90548f-7a30-b80b-96d0-89c0ecf6e425
+		summarizeBy: none
+		sourceColumn: POStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PurchaseOrders = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderPath & "purchase_orders_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"POID", type text}, {"ProductID", type text}, {"SupplierID", type text}, {"OrderDate", type date}, {"ExpectedDeliveryDate", type date}, {"ActualDeliveryDate", type date}, {"OrderQty", Int64.Type}, {"ReceivedQty", Int64.Type}, {"OrderValue", type number}, {"Status", type text}, {"PendingQty", Int64.Type}, {"FillRatePct", type number}, {"ReceivedValue", type number}, {"PlannedLeadTimeDays", Int64.Type}, {"ActualLeadTimeDays", Int64.Type}, {"DeliveryDelayDays", Int64.Type}, {"StatusClean", type text}, {"DeliveryStatus", type text}, {"DataIssue", type text}, {"HasDataIssue", type text}}, "en-US"),
+				    Result = Table.AddColumn(Typed, "POStatus", each if [StatusClean] = "Received" then "Received" else if Text.Contains([StatusClean], "Partially") then "Partially Received" else "Received - Not Closed", type text)
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

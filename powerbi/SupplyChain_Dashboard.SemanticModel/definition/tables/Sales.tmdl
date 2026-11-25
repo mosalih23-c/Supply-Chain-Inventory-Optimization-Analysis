@@ -1,0 +1,86 @@
+table Sales
+	lineageTag: bc447d8e-4121-9279-caab-10b359e34e03
+
+	measure 'Total Sales Units' = SUM(Sales[UnitsSold])
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 9d714674-6b8a-4b5c-e6ec-6a5486421d43
+
+	measure 'Avg Daily Sales Units' = DIVIDE([Total Sales Units], DISTINCTCOUNT(Sales[Date]))
+		formatString: #,0.0
+		displayFolder: Sales
+		lineageTag: 1472ac2c-271f-0823-b453-610c83d16524
+
+	column Date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 9eecc081-2b6f-f65e-ca99-f19db073b3fa
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ProductID
+		dataType: string
+		lineageTag: 879504a8-a597-45e7-5e53-74711ae2bf5a
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsSold
+		dataType: int64
+		formatString: #,0
+		lineageTag: f4e9448c-a3ec-5dfb-afb2-28e8a67cc677
+		summarizeBy: sum
+		sourceColumn: UnitsSold
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		lineageTag: 25e1990d-892e-9b60-4c23-463a0ef1e3ab
+		summarizeBy: none
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: 5cad3b60-7fb5-152d-6dad-e6a587607682
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekday
+		dataType: string
+		lineageTag: 045cb4bc-384d-064d-9635-345c06441ec6
+		summarizeBy: none
+		sourceColumn: Weekday
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsZeroSaleDay
+		dataType: string
+		lineageTag: 6552ccfd-a880-53f3-8ed1-e3a11d0a51a6
+		summarizeBy: none
+		sourceColumn: IsZeroSaleDay
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderPath & "daily_sales_2025_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Date", type date}, {"ProductID", type text}, {"UnitsSold", Int64.Type}, {"MonthNumber", Int64.Type}, {"MonthName", type text}, {"Weekday", type text}, {"IsZeroSaleDay", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

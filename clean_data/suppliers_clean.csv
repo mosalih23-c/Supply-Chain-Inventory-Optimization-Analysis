@@ -1,0 +1,26 @@
+SupplierID,SupplierName,Region,ReliabilityScore,StandardLeadTimeDays,PaymentTermsDays,SupplierCategory
+SUP001,Gulf Distribution,Riyadh,0.94,15,60,Regional
+SUP002,Riyadh Wholesale,Makkah,0.84,9,15,Regional
+SUP003,Al Noor Trading,Khobar,0.78,7,60,Regional
+SUP004,Desert Supply Co.,Dammam,0.87,13,15,Regional
+SUP005,Eastern Logistics,Dammam,0.74,15,60,Local
+SUP006,Prime Goods,Medina,0.94,20,60,Local
+SUP007,Modern Retail Supply,Riyadh,0.89,11,60,Local
+SUP008,Falcon Imports,Makkah,0.92,6,45,Local
+SUP009,Blue Horizon,Jeddah,0.82,18,30,Local
+SUP010,Saudi Merchants,Riyadh,0.98,14,45,International
+SUP011,Atlas Products,Khobar,0.96,16,30,Local
+SUP012,Rapid Source,Medina,0.93,4,60,Local
+SUP013,Golden Route,Makkah,0.77,8,45,Local
+SUP014,Nexa Supply,Makkah,0.85,17,30,Local
+SUP015,Urban Trade,Makkah,0.73,18,45,Regional
+SUP016,Summit Wholesale,Makkah,0.76,11,45,Regional
+SUP017,Cedar Trading,Khobar,0.9,18,15,Regional
+SUP018,Red Sea Imports,Riyadh,0.92,18,15,Regional
+SUP019,Vision Suppliers,Medina,0.98,10,15,Local
+SUP020,Global Link,Dammam,0.81,20,15,International
+SUP021,North Star Supply,Khobar,0.82,8,30,Local
+SUP022,Metro Distribution,Dammam,0.85,7,45,Local
+SUP023,Smart Source,Jeddah,0.77,15,45,Local
+SUP024,Pearl Trading,Medina,0.76,15,30,Regional
+SUP025,Kingdom Supplies,Makkah,0.85,5,60,Regional

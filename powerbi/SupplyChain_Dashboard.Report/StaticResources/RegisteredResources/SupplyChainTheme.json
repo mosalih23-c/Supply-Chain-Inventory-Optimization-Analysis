@@ -1,0 +1,65 @@
+{
+  "name": "SupplyChainCorporate",
+  "dataColors": [
+    "#2878A0",
+    "#16324F",
+    "#25856A",
+    "#E5A33D",
+    "#C84D4D",
+    "#7FA7C2",
+    "#4F6D8A",
+    "#9DB4C8"
+  ],
+  "foreground": "#16324F",
+  "background": "#FFFFFF",
+  "tableAccent": "#2878A0",
+  "good": "#25856A",
+  "neutral": "#E5A33D",
+  "bad": "#C84D4D",
+  "maximum": "#C84D4D",
+  "center": "#E5A33D",
+  "minimum": "#25856A",
+  "textClasses": {
+    "callout": {
+      "fontSize": 19,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#16324F"
+    },
+    "title": {
+      "fontSize": 11,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#16324F"
+    },
+    "header": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#16324F"
+    },
+    "label": {
+      "fontSize": 9,
+      "fontFace": "Segoe UI",
+      "color": "#4A5B6C"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ]
+      }
+    }
+  }
+}

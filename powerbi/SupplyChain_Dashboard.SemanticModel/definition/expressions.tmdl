@@ -1,0 +1,5 @@
+expression FolderPath = "D:\SupplyChain_Inventory_Optimization_Dataset\clean_data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 98020427-b91c-9e77-0e55-68e827d311e5
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,194 @@
+table Deliveries
+	lineageTag: caff68fd-740e-f2ec-41f0-3db4eb893aa2
+
+	measure 'Total Deliveries' = COUNTROWS(Deliveries)
+		formatString: #,0
+		displayFolder: Suppliers
+		lineageTag: 91014003-0602-6639-2a04-bb4516568fbf
+
+	measure 'Late Deliveries' = VAR n = CALCULATE(COUNTROWS(Deliveries), KEEPFILTERS(Deliveries[DeliveryStatus] = "Late")) RETURN IF(ISBLANK(n) && NOT ISBLANK([Total Deliveries]), 0, n)
+		formatString: #,0
+		displayFolder: Suppliers
+		lineageTag: 1372144a-57ff-9f68-0f84-91dc5696b006
+
+	measure 'On-Time Deliveries' = VAR n = CALCULATE(COUNTROWS(Deliveries), KEEPFILTERS(Deliveries[DeliveryStatus] IN {"On Time", "Early"})) RETURN IF(ISBLANK(n) && NOT ISBLANK([Total Deliveries]), 0, n)
+		formatString: #,0
+		displayFolder: Suppliers
+		lineageTag: 0efff35d-0eb4-d07a-3196-4095d595bc26
+
+	measure 'Late Delivery %' = DIVIDE([Late Deliveries], [Total Deliveries])
+		formatString: 0.0%
+		displayFolder: Suppliers
+		lineageTag: 45f67059-d102-e06e-7dbb-abc3f268d34c
+
+	measure 'Total Suppliers' = DISTINCTCOUNT(Deliveries[SupplierID])
+		formatString: #,0
+		displayFolder: Suppliers
+		lineageTag: 47e32b65-1039-0330-cbf7-0e2a7e04ba92
+
+	measure 'Avg Actual Lead Time' = AVERAGE(Deliveries[ActualLeadTimeDays])
+		formatString: 0.0
+		displayFolder: Suppliers
+		lineageTag: 6f22aeb2-3458-0acd-36b9-8167d404e34e
+
+	measure 'Avg Expected Lead Time' = AVERAGE(Deliveries[ExpectedLeadTimeDays])
+		formatString: 0.0
+		displayFolder: Suppliers
+		lineageTag: 98d220e8-118a-8314-e95b-c1a904e79775
+
+	measure 'Avg Late Days' = CALCULATE(AVERAGE(Deliveries[LateDays]), KEEPFILTERS(Deliveries[DeliveryStatus] = "Late"))
+		formatString: 0.0
+		displayFolder: Suppliers
+		lineageTag: f11d9883-3434-011a-3912-e063cef94a2a
+
+	measure 'Reliability Score' = IF(NOT ISBLANK([Total Deliveries]), AVERAGE(Suppliers[ReliabilityScore]))
+		formatString: 0.00
+		displayFolder: Suppliers
+		lineageTag: af85dbc4-5d6f-b49a-f46c-04e5f33cf203
+
+	measure 'Late % Color' = VAR p = [Late Delivery %] RETURN SWITCH(TRUE(), ISBLANK(p), BLANK(), p >= 0.5, "#C84D4D", p >= 0.4, "#E5A33D", "#25856A")
+		displayFolder: Formatting
+		lineageTag: b5f371bc-f5ca-164a-5205-3c1ce3db26fe
+
+	column POID
+		dataType: string
+		lineageTag: 3142c8bf-0236-7695-9232-71d94cb3fd60
+		summarizeBy: none
+		sourceColumn: POID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierID
+		dataType: string
+		lineageTag: 6d719e3c-d1c9-0b5e-5a48-24193cabb999
+		summarizeBy: none
+		sourceColumn: SupplierID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 979ed51d-d298-d540-7246-fdc0abd58440
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ExpectedDeliveryDate
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 2e297bd2-6a58-4852-5c8c-2426924406c2
+		summarizeBy: none
+		sourceColumn: ExpectedDeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ActualDeliveryDate
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 05cb06f2-db82-0f17-19fa-7296a913eaf5
+		summarizeBy: none
+		sourceColumn: ActualDeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DeliveryDelayDays
+		dataType: int64
+		lineageTag: 6baacdbb-0f9e-7bd6-32f7-a1055c427009
+		summarizeBy: none
+		sourceColumn: DeliveryDelayDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderQty
+		dataType: int64
+		formatString: #,0
+		lineageTag: b5cbf244-948e-e7bf-a504-1ac83002d3cf
+		summarizeBy: sum
+		sourceColumn: OrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReceivedQty
+		dataType: int64
+		formatString: #,0
+		lineageTag: 2a373c95-4700-d434-319f-92d83728e8b0
+		summarizeBy: sum
+		sourceColumn: ReceivedQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column DelayMatchesDates
+		dataType: string
+		lineageTag: 1b23b598-730a-c823-d76c-175c95f3cb60
+		summarizeBy: none
+		sourceColumn: DelayMatchesDates
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryStatus
+		dataType: string
+		lineageTag: 2e29673f-7f78-2cbf-f969-26a89d23d9c1
+		summarizeBy: none
+		sourceColumn: DeliveryStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column LateDays
+		dataType: int64
+		lineageTag: 3bf8c825-1ed1-cded-8c08-cb76e0bcdd4e
+		summarizeBy: none
+		sourceColumn: LateDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualLeadTimeDays
+		dataType: int64
+		lineageTag: aac468aa-d619-3656-b82a-053dd42530ad
+		summarizeBy: none
+		sourceColumn: ActualLeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExpectedLeadTimeDays
+		dataType: int64
+		lineageTag: 89f3e1b0-a164-08e2-d989-005c59bfd79b
+		summarizeBy: none
+		sourceColumn: ExpectedLeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: string
+		lineageTag: 15f91b16-abd6-f1fe-ebd3-1c18c1b1dec7
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Deliveries = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderPath & "supplier_delivery_performance_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"POID", type text}, {"SupplierID", type text}, {"OrderDate", type date}, {"ExpectedDeliveryDate", type date}, {"ActualDeliveryDate", type date}, {"DeliveryDelayDays", Int64.Type}, {"OrderQty", Int64.Type}, {"ReceivedQty", Int64.Type}, {"DelayMatchesDates", type text}, {"DeliveryStatus", type text}, {"LateDays", Int64.Type}, {"ActualLeadTimeDays", Int64.Type}}, "en-US"),
+				    AddExpected = Table.AddColumn(Typed, "ExpectedLeadTimeDays", each Duration.Days([ExpectedDeliveryDate] - [OrderDate]), Int64.Type),
+				    POSource = Table.PromoteHeaders(Csv.Document(File.Contents(FolderPath & "purchase_orders_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]), [PromoteAllScalars=true]),
+				    POMap = Table.SelectColumns(POSource, {"POID", "ProductID"}),
+				    Joined = Table.NestedJoin(AddExpected, {"POID"}, POMap, {"POID"}, "PO", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(Joined, "PO", {"ProductID"}, {"ProductID"}),
+				    Result = Table.TransformColumnTypes(Expanded, {{"ProductID", type text}})
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

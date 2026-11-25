@@ -1,0 +1,64 @@
+table DimDate
+	lineageTag: 15a82623-211b-7d22-9300-17f3ea62ff8b
+
+	column Date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: f4ac0486-f2b8-b975-2355-542738a0a9d8
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		lineageTag: 584f341d-fd4f-3cda-66ef-28b1ee2f43ca
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		isHidden
+		lineageTag: 70100f58-739b-5a7e-079d-422fccd7ee96
+		summarizeBy: none
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 89ca4dc0-6671-4fc9-ec88-4e92b634a646
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: a4046cf8-cd73-37f5-d49a-c8c91f17072d
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Dates = List.Dates(#date(2025, 1, 1), 365, #duration(1, 0, 0, 0)),
+				    Base = Table.FromList(Dates, Splitter.SplitByNothing(), {"Date"}),
+				    Typed = Table.TransformColumnTypes(Base, {{"Date", type date}}),
+				    AddYear = Table.AddColumn(Typed, "Year", each Date.Year([Date]), Int64.Type),
+				    AddMonthNo = Table.AddColumn(AddYear, "MonthNumber", each Date.Month([Date]), Int64.Type),
+				    AddMonth = Table.AddColumn(AddMonthNo, "Month", each Date.ToText([Date], "MMM", "en-US"), type text),
+				    AddQuarter = Table.AddColumn(AddMonth, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date])), type text)
+				in
+				    AddQuarter
+
+	annotation PBI_ResultType = Table
+

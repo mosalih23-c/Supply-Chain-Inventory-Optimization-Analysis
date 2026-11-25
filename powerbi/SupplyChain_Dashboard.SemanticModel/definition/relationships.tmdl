@@ -1,0 +1,40 @@
+relationship 10f1f127-1bd7-df20-ca4a-2bc3f06ec2bb
+	fromColumn: Sales.ProductID
+	toColumn: Products.ProductID
+
+relationship 156bd933-6367-50d6-a313-8121e3d06b0e
+	fromColumn: Sales.Date
+	toColumn: DimDate.Date
+
+relationship 210c72c3-9ff8-dd25-38e4-633211839d6c
+	fromColumn: Inventory.ProductID
+	toColumn: Products.ProductID
+
+relationship bad4b946-cc50-2256-a789-c02e6ba4b821
+	fromColumn: Inventory.StoreID
+	toColumn: Stores.StoreID
+
+relationship 1b0d81a5-bb3a-1266-c8a9-99ae387f1ef4
+	fromColumn: PurchaseOrders.ProductID
+	toColumn: Products.ProductID
+
+relationship e1736de6-d9db-f8e3-9703-37aaaaa040f5
+	fromColumn: PurchaseOrders.SupplierID
+	toColumn: Suppliers.SupplierID
+
+relationship e46e0e0d-fc6b-089a-3f0c-1158bfa57b2b
+	fromColumn: PurchaseOrders.OrderDate
+	toColumn: DimDate.Date
+
+relationship 9c28a7b5-66d5-51e9-ead4-c690f8d0359d
+	fromColumn: Deliveries.SupplierID
+	toColumn: Suppliers.SupplierID
+
+relationship 185c3a81-26b2-2321-5a48-ae404f1d5603
+	fromColumn: Deliveries.ProductID
+	toColumn: Products.ProductID
+
+relationship e6acb7a2-7a73-d35d-6d16-11a5301ac0d5
+	fromColumn: Deliveries.OrderDate
+	toColumn: DimDate.Date
+

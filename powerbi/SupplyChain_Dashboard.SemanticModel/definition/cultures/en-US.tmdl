@@ -1,0 +1,765 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "inventory.inventory_records": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Inventory Records"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product-Store Records": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Records": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.alloc_stores_with_excess": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Alloc Stores With Excess"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Excess Stores": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.alloc_stores_needing_stock": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Alloc Stores Needing Stock"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Short Stores": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.alloc_excess_units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Alloc Excess Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Excess": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.alloc_shortage_units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Alloc Shortage Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Shortage": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.transfer_potential_units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Transfer Potential Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Transferable": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.records_requiring_reorder": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Records Requiring Reorder"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Reorder Records": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.total_onhand_units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Total On-Hand Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "On-Hand": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.total_available_units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "Total Available Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Available": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.productid": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "ProductID"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.storeid": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "StoreID"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Store ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "inventory.stockstatus": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Inventory",
+			          "ConceptualProperty": "StockStatus"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Stock Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "products.productname": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Products",
+			          "ConceptualProperty": "ProductName"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Product Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "products.category": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Products",
+			          "ConceptualProperty": "Category"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Category": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "suppliers.suppliername": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Suppliers",
+			          "ConceptualProperty": "SupplierName"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supplier": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.total_deliveries": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "Total Deliveries"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Deliveries": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.late_deliveries": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "Late Deliveries"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Late": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.late_delivery_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "Late Delivery %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Late %": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.avg_late_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "Avg Late Days"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Late Days": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.avg_actual_lead_time": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "Avg Actual Lead Time"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Actual LT": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Actual": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.avg_expected_lead_time": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "Avg Expected Lead Time"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Expected LT": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Expected": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.reliability_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "Reliability Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Reliability": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "deliveries.ontime_deliveries": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Deliveries",
+			          "ConceptualProperty": "On-Time Deliveries"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "On-Time / Early": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.total_purchase_orders": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "Total Purchase Orders"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Purchase Orders": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.outstanding_units_open_pos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "Outstanding Units (Open POs)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Outstanding Units": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.poid": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "POID"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "PO ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.orderdate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "OrderDate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Order Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.expecteddeliverydate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "ExpectedDeliveryDate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Expected": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.postatus": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "POStatus"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "PO Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.deliverystatus": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "DeliveryStatus"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Delivery Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.overdue_pos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "Overdue POs"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Overdue": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.open_pos_not_yet_due": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "Open POs Not Yet Due"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Open – not yet due": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.total_ordered_units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "Total Ordered Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ordered": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "purchaseorders.total_received_units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PurchaseOrders",
+			          "ConceptualProperty": "Total Received Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Received": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

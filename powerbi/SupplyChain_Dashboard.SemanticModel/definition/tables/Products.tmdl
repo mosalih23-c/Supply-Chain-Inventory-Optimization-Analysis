@@ -1,0 +1,100 @@
+table Products
+	lineageTag: ab2107f7-0a10-326b-47f3-de010ccfdd69
+
+	column ProductID
+		dataType: string
+		lineageTag: ae248481-9ac0-c8dd-7180-64b9d4716a4e
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: cdb6a75b-0fdf-9249-3a26-aca6dc2ecee5
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 92e19644-0930-6401-856e-bdfdc364f10d
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierID
+		dataType: string
+		lineageTag: 26550115-4bd8-7bc2-3350-641c3eb8ecef
+		summarizeBy: none
+		sourceColumn: SupplierID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: double
+		formatString: #,0.00
+		lineageTag: bcc9ce2d-1fb3-0dfb-1949-97592a1eeaef
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		formatString: #,0.00
+		lineageTag: c43979c8-09a6-52f3-3698-514bfab94307
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinOrderQty
+		dataType: int64
+		lineageTag: a9554baa-7c8c-6e9a-0938-cdf5c7e9ef83
+		summarizeBy: none
+		sourceColumn: MinOrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetStockDays
+		dataType: int64
+		lineageTag: 429fab90-e757-6748-8ed5-ae37649fedc1
+		summarizeBy: none
+		sourceColumn: TargetStockDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitMargin
+		dataType: double
+		formatString: #,0.00
+		lineageTag: e54aa2bd-2aad-e399-98f1-6955f49fac7e
+		summarizeBy: none
+		sourceColumn: UnitMargin
+
+		annotation SummarizationSetBy = Automatic
+
+	column MarginPct
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 1095795b-6884-bb9b-47ac-8b62506786ba
+		summarizeBy: none
+		sourceColumn: MarginPct
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderPath & "products_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"ProductID", type text}, {"ProductName", type text}, {"Category", type text}, {"SupplierID", type text}, {"UnitCost", type number}, {"UnitPrice", type number}, {"MinOrderQty", Int64.Type}, {"TargetStockDays", Int64.Type}, {"UnitMargin", type number}, {"MarginPct", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

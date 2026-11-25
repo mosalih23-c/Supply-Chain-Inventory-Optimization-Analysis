@@ -1,0 +1,356 @@
+table Inventory
+	lineageTag: 941e350d-4bf3-2f61-c9e2-cc823b85b52a
+
+	measure 'Total Inventory Units' = SUM(Inventory[OnHandUnits])
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: 78f4e39b-d983-2e15-633f-ebbea6418ddf
+
+	measure 'Total On-Hand Units' = [Total Inventory Units]
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: d5a60fc4-9cca-0948-4f20-3860b17b9575
+
+	measure 'Available Inventory Units' = SUM(Inventory[AvailableUnits])
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: 7122f642-1f16-380c-16a3-48d7b6c1f116
+
+	measure 'Total Available Units' = [Available Inventory Units]
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: 2b927b1f-d8e2-1f0a-9948-2087b7d70d71
+
+	measure 'Excess Inventory Units' = CALCULATE(SUM(Inventory[ExcessUnits]), KEEPFILTERS(Inventory[StockStatus] = "Excess"))
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: e4c2eeac-c8de-3f55-7ab4-86ff9d904bb8
+
+	measure 'Excess Inventory Value' = CALCULATE(SUM(Inventory[ExcessValue]), KEEPFILTERS(Inventory[StockStatus] = "Excess"))
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: 4c474e11-3821-7af3-2715-e9267c362a04
+
+	measure 'Inventory Value' = SUM(Inventory[InventoryValue])
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: 3b5c94fa-0919-ba66-f912-d32e7e6d131c
+
+	measure 'Excess Value %' = DIVIDE([Excess Inventory Value], [Inventory Value])
+		formatString: 0.0%
+		displayFolder: Inventory
+		lineageTag: 4b8aa43f-d637-44a6-4190-57c5457207b0
+
+	measure 'Inventory Records' = COUNTROWS(Inventory)
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: b7992bb0-b999-38c4-d0d8-b9c028e5870e
+
+	measure 'Stockout Records' = CALCULATE(COUNTROWS(Inventory), KEEPFILTERS(Inventory[StockStatus] = "Out of Stock")) + 0
+		formatString: #,0
+		displayFolder: Stock Risk
+		lineageTag: ee3c8833-a0b4-0922-1500-0ad808bbaa20
+
+	measure 'Records Requiring Reorder' = CALCULATE(COUNTROWS(Inventory), KEEPFILTERS(Inventory[StockStatus] IN {"Reorder Now", "Out of Stock"})) + 0
+		formatString: #,0
+		displayFolder: Stock Risk
+		lineageTag: 3bd5262a-8d38-570e-f749-69c601bf4a76
+
+	measure 'Excess Records' = CALCULATE(COUNTROWS(Inventory), KEEPFILTERS(Inventory[StockStatus] = "Excess")) + 0
+		formatString: #,0
+		displayFolder: Stock Risk
+		lineageTag: 15d21b10-96a8-923e-bb5a-e965f131fbd6
+
+	measure 'Stores With Excess' = CALCULATE(DISTINCTCOUNT(Inventory[StoreID]), KEEPFILTERS(Inventory[StockStatus] = "Excess"))
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: 51832ae4-ef27-d2ea-8801-d3f752859606
+
+	measure 'Stores Needing Stock' = CALCULATE(DISTINCTCOUNT(Inventory[StoreID]), KEEPFILTERS(Inventory[StockStatus] IN {"Reorder Now", "Out of Stock"}))
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: ded2499f-8a0d-1a34-1c1c-585c631e00ff
+
+	measure 'Shortage Units' = SUMX(FILTER(Inventory, Inventory[StockStatus] IN {"Reorder Now", "Out of Stock"}), MAX(MAX(Inventory[ReorderPointUnits], Inventory[TargetStockUnits]) - Inventory[AvailableUnits], 0))
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: e77b34b5-95d5-0ed8-60ed-f05f0c3551d6
+
+	measure 'Transfer Potential Units' = VAR ex = [Excess Inventory Units] VAR sh = [Shortage Units] RETURN IF(ex > 0 && sh > 0, MIN(ex, sh))
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: 92395f93-3150-7f51-3d6f-6f1f9dce759f
+
+	measure 'Alloc Stores With Excess' = IF(NOT ISBLANK([Transfer Potential Units]), [Stores With Excess])
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: ac1549aa-093a-307d-9828-60ce97c49d25
+
+	measure 'Alloc Stores Needing Stock' = IF(NOT ISBLANK([Transfer Potential Units]), [Stores Needing Stock])
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: a18dc06c-73f1-10d0-1805-b6e7eb736ccf
+
+	measure 'Alloc Excess Units' = IF(NOT ISBLANK([Transfer Potential Units]), [Excess Inventory Units])
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: 9173bcf5-5e4c-c243-9fed-5ba0840fde46
+
+	measure 'Alloc Shortage Units' = IF(NOT ISBLANK([Transfer Potential Units]), [Shortage Units])
+		formatString: #,0
+		displayFolder: Allocation
+		lineageTag: 22cb8f96-719a-1278-1600-bb31cfbc8c56
+
+	measure 'Status Color' = SWITCH(SELECTEDVALUE(Inventory[StockStatus]), "Out of Stock", "#C84D4D", "Reorder Now", "#E5A33D", "Healthy", "#25856A", "Excess", "#2878A0", "#16324F")
+		displayFolder: Formatting
+		lineageTag: 01137e21-a80a-952f-cc5b-54ba30642af6
+
+	column StoreID
+		dataType: string
+		lineageTag: 633ac520-ef2d-0790-b0e0-110016bd6844
+		summarizeBy: none
+		sourceColumn: StoreID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: string
+		lineageTag: c2eaf82d-fed4-66c6-c9a9-a880a0550a2e
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: c3358318-5828-40c5-c521-52e90d5c6d3e
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierID
+		dataType: string
+		lineageTag: 69a6323c-6139-c5a2-572e-5e57071bb4a9
+		summarizeBy: none
+		sourceColumn: SupplierID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SnapshotDate
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 840dc52a-2a20-7a5a-94b5-8fb9a9ed2c40
+		summarizeBy: none
+		sourceColumn: SnapshotDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column OnHandUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: 19300730-87d0-2fdc-e8d1-b202c9cd93cd
+		summarizeBy: sum
+		sourceColumn: OnHandUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReservedUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: 8f395d31-2bd1-4d48-4ee5-2c30fde4ea4b
+		summarizeBy: sum
+		sourceColumn: ReservedUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column DamagedUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: e3b8f0d5-b628-0c5a-87f4-ea9cdfecd031
+		summarizeBy: sum
+		sourceColumn: DamagedUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnusableUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: d5cb3930-dd2f-223a-9a5d-e95130ebe74b
+		summarizeBy: sum
+		sourceColumn: UnusableUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvailableUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: ed9026b4-79a5-3a92-f99d-4a5c94452185
+		summarizeBy: sum
+		sourceColumn: AvailableUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnusableExceedsOnHand
+		dataType: string
+		lineageTag: 1a055d27-d1c3-f1df-e3de-f9bb62056843
+		summarizeBy: none
+		sourceColumn: UnusableExceedsOnHand
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 69136a62-99e3-7ca6-bc7f-e74f48357680
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryValue
+		dataType: double
+		formatString: #,0
+		lineageTag: b97e8f85-202c-aa04-8985-72a1c46a1f22
+		summarizeBy: sum
+		sourceColumn: InventoryValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvailableValue
+		dataType: double
+		formatString: #,0
+		lineageTag: bd00f923-ae26-2fb9-b4f4-52f81765608c
+		summarizeBy: sum
+		sourceColumn: AvailableValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column DamagedValue
+		dataType: double
+		formatString: #,0
+		lineageTag: 7995b518-9908-6ccb-e627-7e6de33b283d
+		summarizeBy: sum
+		sourceColumn: DamagedValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvgDailySales
+		dataType: double
+		formatString: 0.00
+		lineageTag: ac0d0f98-b280-f2c5-7ca2-e4f83bce7ce7
+		summarizeBy: none
+		sourceColumn: AvgDailySales
+
+		annotation SummarizationSetBy = Automatic
+
+	column StdDevDailySales
+		dataType: double
+		formatString: 0.00
+		lineageTag: 7b01890d-1d7e-3721-061e-45ec1ec08947
+		summarizeBy: none
+		sourceColumn: StdDevDailySales
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTimeDays
+		dataType: int64
+		lineageTag: f11dd8d9-64f8-8b60-1cf3-c1d8714cd231
+		summarizeBy: none
+		sourceColumn: LeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetStockDays
+		dataType: int64
+		lineageTag: c691b374-e96a-1899-3ace-608df16eb000
+		summarizeBy: none
+		sourceColumn: TargetStockDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinOrderQty
+		dataType: int64
+		lineageTag: cf860321-ffb0-ed3f-5a7c-83dda3cd5302
+		summarizeBy: none
+		sourceColumn: MinOrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column DaysOfCover
+		dataType: double
+		formatString: 0.0
+		lineageTag: 97f3e02f-1837-c56a-e565-58db9bd008f0
+		summarizeBy: none
+		sourceColumn: DaysOfCover
+
+		annotation SummarizationSetBy = Automatic
+
+	column SafetyStockUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: 5aba3434-8023-324d-7fcc-4969d2c07578
+		summarizeBy: sum
+		sourceColumn: SafetyStockUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReorderPointUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: db24846a-f168-19e2-3d7d-ab0c4b7585f9
+		summarizeBy: sum
+		sourceColumn: ReorderPointUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetStockUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: 8fdb2a4b-217b-27b0-815e-bed065e54b2e
+		summarizeBy: sum
+		sourceColumn: TargetStockUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExcessUnits
+		dataType: int64
+		formatString: #,0
+		lineageTag: 3933244b-b2cb-fd04-4024-b6b3709e3fba
+		summarizeBy: sum
+		sourceColumn: ExcessUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExcessValue
+		dataType: double
+		formatString: #,0
+		lineageTag: 53b5afcd-4d4e-7c9c-2fb1-bc5b656108dd
+		summarizeBy: sum
+		sourceColumn: ExcessValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockStatus
+		dataType: string
+		lineageTag: 05237ffd-414c-a7a2-cf1b-ac2ed2a01286
+		summarizeBy: none
+		sourceColumn: StockStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Inventory = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderPath & "inventory_snapshot_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"StoreID", type text}, {"ProductID", type text}, {"Category", type text}, {"SupplierID", type text}, {"SnapshotDate", type date}, {"OnHandUnits", Int64.Type}, {"ReservedUnits", Int64.Type}, {"DamagedUnits", Int64.Type}, {"UnusableUnits", Int64.Type}, {"AvailableUnits", Int64.Type}, {"UnusableExceedsOnHand", type text}, {"UnitCost", type number}, {"InventoryValue", type number}, {"AvailableValue", type number}, {"DamagedValue", type number}, {"AvgDailySales", type number}, {"StdDevDailySales", type number}, {"LeadTimeDays", Int64.Type}, {"TargetStockDays", Int64.Type}, {"MinOrderQty", Int64.Type}, {"DaysOfCover", type number}, {"SafetyStockUnits", Int64.Type}, {"ReorderPointUnits", Int64.Type}, {"TargetStockUnits", Int64.Type}, {"ExcessUnits", Int64.Type}, {"ExcessValue", type number}, {"StockStatus", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

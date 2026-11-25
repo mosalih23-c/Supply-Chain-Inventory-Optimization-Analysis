@@ -1,0 +1,33 @@
+table Stores
+	lineageTag: c662f4b4-b1c3-6f95-dffd-f2d797a522e8
+
+	column StoreID
+		dataType: string
+		lineageTag: 771640ea-3aeb-5927-e421-5bfb33f6dacf
+		summarizeBy: none
+		sourceColumn: StoreID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreName
+		dataType: string
+		lineageTag: e5fe76d4-a31b-f788-1f8d-b2996645d9f7
+		summarizeBy: none
+		sourceColumn: StoreName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Stores = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderPath & "inventory_snapshot_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Ids = Table.Distinct(Table.SelectColumns(Promoted, {"StoreID"})),
+				    Named = Table.AddColumn(Ids, "StoreName", each "Store " & Text.End([StoreID], 2), type text),
+				    Typed = Table.TransformColumnTypes(Named, {{"StoreID", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+
